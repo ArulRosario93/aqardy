@@ -202,7 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
         setState(() {
           currentPage = 1;
         });
-      } else {
+      } else if (currentPage == 1) {
         if (!height) {
           if (confirmPasswordController.text.isEmpty ||
               confirmPasswordController.text != passwordController.text) {
@@ -267,6 +267,47 @@ class _SignUpPageState extends State<SignUpPage> {
           });
         }
 
+        if (height) {
+          if (districtController.text.isEmpty) {
+            setState(() {
+              districtError = true;
+            });
+            return;
+          } else {
+            setState(() {
+              districtError = false;
+            });
+          }
+
+          if (pincodeController.text.isEmpty) {
+            setState(() {
+              pincodeError = true;
+            });
+            return;
+          } else {
+            setState(() {
+              pincodeError = false;
+            });
+          }
+
+          if (stateController.text.isEmpty) {
+            setState(() {
+              stateError = true;
+            });
+            return;
+          } else {
+            setState(() {
+              stateError = false;
+            });
+          }
+
+          //FORM SUBMITTED
+        }
+
+        setState(() {
+          currentPage = 2;
+        });
+      } else {
         if (districtController.text.isEmpty) {
           setState(() {
             districtError = true;
@@ -367,7 +408,7 @@ class _SignUpPageState extends State<SignUpPage> {
           label: "Confirm Password",
           errorMsg: errorMsg,
           showReq: false,
-          onChanged: () => print("dummy"),
+          onChanged: () => (),
           onClick: handleChange,
           passwordReq: changed,
           numberPassword: numberPassword,
