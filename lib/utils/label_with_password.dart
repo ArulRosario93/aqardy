@@ -10,7 +10,9 @@ class LabelWithPassword extends StatelessWidget {
   final bool upperCasePassowrd;
   final bool lowerCasePassword;
   final bool symbolPassword;
+  final bool errorFound;
   final Function onChanged;
+  final String errorMsg;
   final Function(String val) onClick;
   final TextEditingController controller;
   const LabelWithPassword(
@@ -26,7 +28,9 @@ class LabelWithPassword extends StatelessWidget {
       required this.upperCasePassowrd,
       required this.lowerCasePassword,
       required this.symbolPassword,
-      required this.onClick});
+      required this.onClick,
+      required this.errorFound,
+      required this.errorMsg});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class LabelWithPassword extends StatelessWidget {
           onChanged: (e) => onChanged(),
           decoration: InputDecoration(
               hintText: hintText,
+              errorText: errorFound? errorMsg: null,
               suffixIcon: obscureText
                   ? GestureDetector(
                       onTap: () => WidgetsBinding.instance.addPostFrameCallback(

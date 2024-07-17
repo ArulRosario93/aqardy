@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aqardy/utils/label_with_input.dart';
 import 'package:aqardy/utils/label_with_password.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,21 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController districtController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
   TextEditingController stateController = TextEditingController();
+
+  bool usernameError = false;
+  bool enterpriseNameError = false;
+  bool enterpriseEmailError = false;
+  bool enterprisePhoneError = false;
+  bool passwordError = false;
+  bool confirmPasswordError = false;
+  bool alternateEnterprisePhoneError = false;
+  bool loginPinError = false;
+  bool confirmLoginPinError = false;
+  bool addressError = false;
+  bool districtError = false;
+  bool pincodeError = false;
+  bool stateError = false;
+  String errorMsg = "This field is required";
 
   int currentPage = 0;
   bool changed = false;
@@ -53,7 +70,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   handlePasswordChange() {
-
     setState(() {
       changed = true;
     });
@@ -89,19 +105,202 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  handleLoginPin() {
+    if (loginPinController.text != confirmLoginPinController.text) {
+      setState(() {
+        confirmPasswordError = true;
+      });
+      return;
+    } else {
+      setState(() {
+        confirmPasswordError = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     bool height = MediaQuery.of(context).size.height > 800;
 
     handlechangePage() {
-      if (currentPage == 1 && !height) {
+      if (currentPage == 0) {
+        if (usernameController.text.isEmpty) {
+          setState(() {
+            usernameError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            usernameError = false;
+          });
+        }
+
+        if (enterpriseNameController.text.isEmpty) {
+          setState(() {
+            enterpriseNameError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            enterpriseNameError = false;
+          });
+        }
+
+        if (enterpriseEmailController.text.isEmpty) {
+          setState(() {
+            enterpriseEmailError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            enterpriseEmailError = false;
+          });
+        }
+
+        if (enterprisePhoneController.text.isEmpty) {
+          setState(() {
+            enterprisePhoneError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            enterprisePhoneError = false;
+          });
+        }
+
+        if (passwordController.text.length < 8 ||
+            !numberPassword ||
+            !upperCasePassowrd ||
+            !lowerCasePassword ||
+            !symbolPassword) {
+          setState(() {
+            passwordError = true;
+            errorMsg = "Password must contain atleast 8 characters";
+          });
+          return;
+        } else {
+          setState(() {
+            passwordError = false;
+          });
+        }
+
+        if (height) {
+          if (confirmPasswordController.text.isEmpty ||
+              confirmPasswordController.text != passwordController.text) {
+            setState(() {
+              confirmPasswordError = true;
+              errorMsg = "Password does not match";
+            });
+            return;
+          } else {
+            setState(() {
+              confirmPasswordError = false;
+            });
+          }
+        }
+
         setState(() {
-          currentPage = currentPage + 1;
+          currentPage = 1;
         });
       } else {
-        setState(() {
-          currentPage = currentPage + 1;
-        });
+        if (!height) {
+          if (confirmPasswordController.text.isEmpty ||
+              confirmPasswordController.text != passwordController.text) {
+            setState(() {
+              confirmPasswordError = true;
+              errorMsg = "Password does not match";
+            });
+            return;
+          } else {
+            setState(() {
+              confirmPasswordError = false;
+            });
+          }
+        }
+
+        if (alternateEnterprisePhoneController.text.isEmpty) {
+          setState(() {
+            alternateEnterprisePhoneError = true;
+            errorMsg = "This field is required";
+          });
+          return;
+        } else {
+          setState(() {
+            alternateEnterprisePhoneError = false;
+          });
+        }
+
+        if (loginPinController.text.length < 4) {
+          setState(() {
+            loginPinError = true;
+            errorMsg = "Minimum 4 characters";
+          });
+          return;
+        } else {
+          setState(() {
+            loginPinError = false;
+          });
+        }
+
+        if (confirmLoginPinController.text.isEmpty ||
+            confirmLoginPinController.text != loginPinController.text) {
+          setState(() {
+            confirmLoginPinError = true;
+            errorMsg = "Pin does not match";
+          });
+          return;
+        } else {
+          setState(() {
+            confirmLoginPinError = false;
+          });
+        }
+
+        if (addressController.text.isEmpty) {
+          setState(() {
+            addressError = true;
+            errorMsg = "This field is required";
+          });
+          return;
+        } else {
+          setState(() {
+            addressError = false;
+          });
+        }
+
+        if (districtController.text.isEmpty) {
+          setState(() {
+            districtError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            districtError = false;
+          });
+        }
+
+        if (pincodeController.text.isEmpty) {
+          setState(() {
+            pincodeError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            pincodeError = false;
+          });
+        }
+
+        if (stateController.text.isEmpty) {
+          setState(() {
+            stateError = true;
+          });
+          return;
+        } else {
+          setState(() {
+            stateError = false;
+          });
+        }
+
+        //FORM SUBMITTED
       }
 
       pageController.animateToPage(currentPage,
@@ -118,33 +317,43 @@ class _SignUpPageState extends State<SignUpPage> {
       LabelWithInput(
           controller: usernameController,
           label: "Username",
+          errorMsg: errorMsg,
           hintText: "",
+          errorFound: usernameError,
           showReq: false,
           obscureText: false),
       LabelWithInput(
+          errorMsg: errorMsg,
           controller: enterpriseNameController,
           label: "Enterprise Name",
           hintText: "",
+          errorFound: enterpriseNameError,
           showReq: false,
           obscureText: false),
       LabelWithInput(
+          errorMsg: errorMsg,
           controller: enterpriseEmailController,
           label: "Enterprise Email ID",
           hintText: "example@gmail.com",
           showReq: false,
+          errorFound: enterpriseEmailError,
           obscureText: false),
       LabelWithInput(
           controller: enterprisePhoneController,
+          errorMsg: errorMsg,
           label: "Enterprise Phone Number",
           hintText: "",
           showReq: false,
+          errorFound: enterprisePhoneError,
           obscureText: false),
       LabelWithPassword(
+          errorFound: passwordError,
           controller: passwordController,
           label: "Password",
           showReq: true,
           onChanged: handlePasswordChange,
           onClick: handleChange,
+          errorMsg: errorMsg,
           passwordReq: changed,
           numberPassword: numberPassword,
           upperCasePassowrd: upperCasePassowrd,
@@ -153,8 +362,10 @@ class _SignUpPageState extends State<SignUpPage> {
           hintText: "minimum 8 characters",
           obscureText: viewPassword),
       LabelWithPassword(
+          errorFound: confirmPasswordError,
           controller: confirmPasswordController,
           label: "Confirm Password",
+          errorMsg: errorMsg,
           showReq: false,
           onChanged: () => print("dummy"),
           onClick: handleChange,
@@ -167,28 +378,36 @@ class _SignUpPageState extends State<SignUpPage> {
           hintText: "",
           obscureText: viewConfirmPassword),
       LabelWithInput(
+          errorMsg: errorMsg,
+          errorFound: alternateEnterprisePhoneError,
           controller: alternateEnterprisePhoneController,
           label: "Alternate Enterprise Phone Number",
           hintText: "",
           showReq: false,
           obscureText: false),
       LabelWithInput(
+          errorFound: loginPinError,
           controller: loginPinController,
           label: "Login Pin",
-          showReq: false,
           hintText: "minimum 4 characters",
-          obscureText: true),
+          showReq: false,
+          errorMsg: errorMsg,
+          obscureText: false),
       LabelWithInput(
           controller: confirmLoginPinController,
           label: "Confirm Login Pin",
           hintText: "",
           showReq: false,
-          obscureText: true),
+          errorFound: confirmLoginPinError,
+          errorMsg: errorMsg,
+          obscureText: false),
       LabelWithInput(
           controller: addressController,
           label: "Address",
           hintText: "",
+          errorMsg: errorMsg,
           showReq: false,
+          errorFound: addressError,
           obscureText: false),
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,10 +416,12 @@ class _SignUpPageState extends State<SignUpPage> {
           Flexible(
             flex: 1,
             child: LabelWithInput(
+                errorMsg: errorMsg,
                 controller: districtController,
                 label: "District",
                 hintText: "",
                 showReq: false,
+                errorFound: districtError,
                 obscureText: false),
           ),
           const SizedBox(
@@ -211,8 +432,10 @@ class _SignUpPageState extends State<SignUpPage> {
             child: LabelWithInput(
                 controller: pincodeController,
                 label: "Pincode",
+                errorMsg: errorMsg,
                 hintText: "",
                 showReq: false,
+                errorFound: pincodeError,
                 obscureText: false),
           ),
         ],
@@ -220,8 +443,10 @@ class _SignUpPageState extends State<SignUpPage> {
       LabelWithInput(
           controller: stateController,
           label: "State",
+          errorMsg: errorMsg,
           showReq: false,
           hintText: "",
+          errorFound: stateError,
           obscureText: false),
     ];
 
@@ -286,7 +511,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const Text("Enterprise Sign Up",
                     style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
