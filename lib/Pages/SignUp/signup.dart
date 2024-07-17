@@ -1,4 +1,5 @@
 import 'package:aqardy/utils/label_with_input.dart';
+import 'package:aqardy/utils/label_with_password.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -25,9 +26,68 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController stateController = TextEditingController();
 
   int currentPage = 0;
+  bool changed = false;
+
+  bool numberPassword = false;
+  bool upperCasePassowrd = false;
+  bool lowerCasePassword = false;
+  bool symbolPassword = false;
+
+  bool viewPassword = true;
+  bool viewConfirmPassword = true;
+
   PageController pageController = PageController(
     initialPage: 0,
   );
+
+  handleChange(val) {
+    if (val == "Password") {
+      setState(() {
+        viewPassword = !viewPassword;
+      });
+    } else {
+      setState(() {
+        viewConfirmPassword = !viewConfirmPassword;
+      });
+    }
+  }
+
+  handlePasswordChange() {
+
+    setState(() {
+      changed = true;
+    });
+
+    if (passwordController.text.isEmpty) {
+      setState(() {
+        changed = false;
+      });
+    }
+
+    if (passwordController.text.contains(RegExp(r'[0-9]'))) {
+      setState(() {
+        numberPassword = true;
+      });
+    }
+
+    if (passwordController.text.contains(RegExp(r'[A-Z]'))) {
+      setState(() {
+        upperCasePassowrd = true;
+      });
+    }
+
+    if (passwordController.text.contains(RegExp(r'[a-z]'))) {
+      setState(() {
+        lowerCasePassword = true;
+      });
+    }
+
+    if (passwordController.text.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      setState(() {
+        symbolPassword = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     List<Widget> listIT = [
       LabelWithInput(
-          controller: enterpriseNameController,
+          controller: usernameController,
           label: "Username",
           hintText: "",
           showReq: false,
@@ -79,18 +139,33 @@ class _SignUpPageState extends State<SignUpPage> {
           hintText: "",
           showReq: false,
           obscureText: false),
-      LabelWithInput(
+      LabelWithPassword(
           controller: passwordController,
           label: "Password",
           showReq: true,
+          onChanged: handlePasswordChange,
+          onClick: handleChange,
+          passwordReq: changed,
+          numberPassword: numberPassword,
+          upperCasePassowrd: upperCasePassowrd,
+          lowerCasePassword: lowerCasePassword,
+          symbolPassword: symbolPassword,
           hintText: "minimum 8 characters",
-          obscureText: true),
-      LabelWithInput(
+          obscureText: viewPassword),
+      LabelWithPassword(
           controller: confirmPasswordController,
           label: "Confirm Password",
-          hintText: "",
           showReq: false,
-          obscureText: true),
+          onChanged: () => print("dummy"),
+          onClick: handleChange,
+          passwordReq: changed,
+          numberPassword: numberPassword,
+          upperCasePassowrd: upperCasePassowrd,
+          lowerCasePassword: lowerCasePassword,
+          symbolPassword: symbolPassword,
+          // onClick: handleChange,
+          hintText: "",
+          obscureText: viewConfirmPassword),
       LabelWithInput(
           controller: alternateEnterprisePhoneController,
           label: "Alternate Enterprise Phone Number",
@@ -264,7 +339,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Text("Already have an account?"),
                     SizedBox(width: 4),
-                    Text("Login")
+                    Text(
+                      "Login",
+                      style: TextStyle(color: Colors.blue),
+                    )
                   ],
                 ),
                 const Padding(padding: EdgeInsets.only(top: 20)),

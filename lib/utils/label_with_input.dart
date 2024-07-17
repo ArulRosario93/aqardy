@@ -5,6 +5,7 @@ class LabelWithInput extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final bool showReq;
+  // final Function(String val) onChanged;
   final TextEditingController controller;
   const LabelWithInput(
       {super.key,
@@ -12,6 +13,7 @@ class LabelWithInput extends StatelessWidget {
       required this.hintText,
       required this.controller,
       required this.showReq,
+      // required this.onChanged,
       required this.obscureText});
 
   @override
@@ -19,7 +21,7 @@ class LabelWithInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 19)),
+        Text(label, style: const TextStyle(fontSize: 18)),
         TextField(
           controller: controller,
           decoration: InputDecoration(
@@ -30,7 +32,7 @@ class LabelWithInput extends StatelessWidget {
                   borderSide: const BorderSide(color: Colors.grey, width: .2))),
           obscureText: obscureText,
         ),
-        showReq
+        controller.text.isNotEmpty? showReq
             ? Row(
                 children: [
                   Flexible(
@@ -111,7 +113,7 @@ class LabelWithInput extends StatelessWidget {
                       )),
                 ],
               )
-            : const SizedBox()
+            : const SizedBox(): const SizedBox()
       ],
     );
   }
