@@ -23,18 +23,23 @@ class LabelWithInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 18)),
-        TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: hintText,
-            errorText: errorFound ? errorMsg : null,
-            suffixIcon: obscureText ? const Icon(Icons.visibility) : null,
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.grey, width: .2)),
+        Text(label, style: const TextStyle(fontSize: 18,)),
+        Container(
+          // height: 60,
+          // width: double.infinity,
+          // alignment: Alignment.center,
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hintText,
+              errorText: errorFound ? errorMsg : null,
+              suffixIcon: obscureText ? const Icon(Icons.visibility) : null,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.grey, width: .2)),
+            ),
+            obscureText: obscureText,
           ),
-          obscureText: obscureText,
         ),
         controller.text.isNotEmpty
             ? showReq
@@ -47,8 +52,8 @@ class LabelWithInput extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                height: 8,
+                                margin: const EdgeInsets.only(top: 5),
+                                height: 5,
                                 color: const Color.fromARGB(255, 56, 255, 159),
                               ),
                               const FittedBox(
@@ -66,8 +71,8 @@ class LabelWithInput extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                height: 8,
+                                margin: const EdgeInsets.only(top: 5),
+                                height: 5,
                                 color: const Color.fromARGB(255, 56, 255, 159),
                               ),
                               const FittedBox(
@@ -85,9 +90,9 @@ class LabelWithInput extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 5),
                                 color: const Color.fromARGB(255, 56, 255, 159),
-                                height: 8,
+                                height: 5,
                               ),
                               const FittedBox(
                                 child: Text(
@@ -104,9 +109,9 @@ class LabelWithInput extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 5),
                                 color: const Color.fromARGB(255, 56, 255, 159),
-                                height: 8,
+                                height: 5,
                               ),
                               const FittedBox(
                                 child: Text(

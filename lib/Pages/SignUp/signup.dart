@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:aqardy/utils/label_with_input.dart';
 import 'package:aqardy/utils/label_with_password.dart';
 import 'package:flutter/material.dart';
@@ -84,25 +82,41 @@ class _SignUpPageState extends State<SignUpPage> {
       setState(() {
         numberPassword = true;
       });
+    } else {
+      setState(() {
+        numberPassword = false;
+      });
     }
 
     if (passwordController.text.contains(RegExp(r'[A-Z]'))) {
       setState(() {
         upperCasePassowrd = true;
       });
+    } else {
+      upperCasePassowrd = false;
     }
 
     if (passwordController.text.contains(RegExp(r'[a-z]'))) {
       setState(() {
         lowerCasePassword = true;
       });
+    } else {
+      lowerCasePassword = false;
     }
 
     if (passwordController.text.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       setState(() {
         symbolPassword = true;
       });
+
+      return;
+    } else {
+      symbolPassword = false;
     }
+
+    // setState(() {
+    //   changed = false;
+    // });
   }
 
   handleLoginPin() {
@@ -514,8 +528,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: 20,
                         decoration: BoxDecoration(
                           color: currentPage == 0
-                              ? Colors.black
-                              : Colors.purple[700],
+                              ? const Color.fromARGB(255, 94, 0, 161)
+                              : const Color.fromARGB(150, 76, 0, 130),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
@@ -527,8 +541,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: 20,
                         decoration: BoxDecoration(
                           color: currentPage == 1
-                              ? Colors.black
-                              : Colors.purple[700],
+                              ? const Color.fromARGB(255, 94, 0, 161)
+                              : const Color.fromARGB(150, 76, 0, 130),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
@@ -541,8 +555,8 @@ class _SignUpPageState extends State<SignUpPage> {
                               width: 20,
                               decoration: BoxDecoration(
                                 color: currentPage == 2
-                                    ? Colors.black
-                                    : Colors.purple[700],
+                                    ? const Color.fromARGB(255, 94, 0, 161)
+                                    : const Color.fromARGB(150, 76, 0, 130),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
@@ -575,15 +589,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(top: 20)),
+                const Padding(padding: EdgeInsets.only(top: 15)),
                 GestureDetector(
                   onTap: handlechangePage,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 20),
+                    margin: const EdgeInsets.only(bottom: 15),
                     padding: const EdgeInsets.all(20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: Colors.purple[700],
+                        color: const Color.fromARGB(255, 94, 0, 161),
                         borderRadius: BorderRadius.circular(10)),
                     child: Text(
                       currentPage == 0
@@ -603,7 +617,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account?"),
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 94, 0, 161),
+                          fontWeight: FontWeight.w500),
+                    ),
                     SizedBox(width: 4),
                     Text(
                       "Login",
@@ -611,7 +630,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     )
                   ],
                 ),
-                const Padding(padding: EdgeInsets.only(top: 20)),
+                const Padding(padding: EdgeInsets.only(top: 15)),
               ],
             ),
           ),

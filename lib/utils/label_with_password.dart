@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 
 class LabelWithPassword extends StatelessWidget {
   final String label;
@@ -38,27 +39,33 @@ class LabelWithPassword extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: const TextStyle(fontSize: 18)),
-        TextField(
-          controller: controller,
-          onChanged: (e) => onChanged(),
-          decoration: InputDecoration(
-              hintText: hintText,
-              errorText: errorFound? errorMsg: null,
-              suffixIcon: obscureText
-                  ? GestureDetector(
-                      onTap: () => WidgetsBinding.instance.addPostFrameCallback(
-                          (_) => onClick(
-                              label)), // Schedule state change after build
-                      child: const Icon(Icons.visibility_off))
-                  : GestureDetector(
-                      onTap: () => WidgetsBinding.instance.addPostFrameCallback(
-                          (_) => onClick(
-                              label)), // Schedule state change after build
-                      child: const Icon(Icons.visibility)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Colors.grey, width: .2))),
-          obscureText: obscureText,
+        Container(
+          // alignment: Alignment.center,
+          // height: 60,
+          // width: double.infinity,
+          child: TextField(
+            controller: controller,
+            onChanged: (e) => onChanged(),
+            decoration: InputDecoration(
+                hintText: hintText,
+                errorText: errorFound ? errorMsg : null,
+                suffixIcon: obscureText
+                    ? GestureDetector(
+                        onTap: () => WidgetsBinding.instance
+                            .addPostFrameCallback((_) => onClick(
+                                label)), // Schedule state change after build
+                        child: const Icon(Icons.visibility_off))
+                    : GestureDetector(
+                        onTap: () => WidgetsBinding.instance
+                            .addPostFrameCallback((_) => onClick(
+                                label)), // Schedule state change after build
+                        child: const Icon(Icons.visibility)),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: .2))),
+            obscureText: obscureText,
+          ),
         ),
         passwordReq
             ? showReq
@@ -71,8 +78,8 @@ class LabelWithPassword extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                height: 8,
+                                margin: const EdgeInsets.only(top: 5),
+                                height: 5,
                                 color: upperCasePassowrd
                                     ? const Color.fromARGB(255, 56, 255, 159)
                                     : Colors.red,
@@ -92,8 +99,8 @@ class LabelWithPassword extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                height: 8,
+                                margin: const EdgeInsets.only(top: 5),
+                                height: 5,
                                 color: lowerCasePassword
                                     ? const Color.fromARGB(255, 56, 255, 159)
                                     : Colors.red,
@@ -113,11 +120,11 @@ class LabelWithPassword extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 5),
                                 color: symbolPassword
                                     ? const Color.fromARGB(255, 56, 255, 159)
                                     : Colors.red,
-                                height: 8,
+                                height: 5,
                               ),
                               const FittedBox(
                                 child: Text(
@@ -134,11 +141,11 @@ class LabelWithPassword extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 5),
                                 color: numberPassword
                                     ? const Color.fromARGB(255, 56, 255, 159)
                                     : Colors.red,
-                                height: 8,
+                                height: 5,
                               ),
                               const FittedBox(
                                 child: Text(
