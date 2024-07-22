@@ -620,13 +620,13 @@ class _SignUpPageState extends State<SignUpPage> {
                     Text(
                       "Already have an account?",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 94, 0, 161),
+                          color: Colors.black,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(width: 4),
                     Text(
                       "Login",
-                      style: TextStyle(color: Colors.blue),
+                      style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
                     )
                   ],
                 ),
